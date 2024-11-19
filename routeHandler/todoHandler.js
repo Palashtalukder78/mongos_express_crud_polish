@@ -9,7 +9,7 @@ const Todo = new mongoose.model('Todo', todoSchema)
 //get all todos
 router.get('/', async (req, res) => {
     try {
-        const todos = await Todo.find({status: 'inactive'})
+        const todos = await Todo.find({ status: 'active' }).select({ _id: 0, __v: 0, date: 0 })
         res.status(200).json({
             message: "Get all Data Successfully!",
             result: todos
