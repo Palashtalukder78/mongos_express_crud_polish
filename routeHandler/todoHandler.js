@@ -22,7 +22,17 @@ router.get('/', async (req, res) => {
 })
 //get a todo by id
 router.get('/:id', async (req, res) => {
-
+    try {
+        const todos = await Todo.find({ _id: req.params.id }).select({ _id: 0, __v: 0, date: 0 })
+        res.status(200).json({
+            message: "Get Single Data Successfully!",
+            result: todos
+        });
+    } catch (error) {
+        res.status(500).json({
+            error: "There was a server-side error!",
+        });
+    }
 })
 
 
