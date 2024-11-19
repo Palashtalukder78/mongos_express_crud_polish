@@ -49,16 +49,18 @@ router.post('/all', async (req, res) => {
 //put a todo 
 router.put('/:id', async (req, res) => {
     try {
-        await Todo.updateOne({ _id: req.params.id }, { status: 'active' });
+        const result = await Todo.findByIdAndUpdate({ _id: req.params.id }, { status: 'active' }, {new: true});
         res.status(200).json({
             message: "Data update successfully!",
         });
+        console.log(result)
     } catch (error) {
         res.status(500).json({
             error: "There was a server-side error!",
         });
     }
 })
+
 //delete todo 
 router.delete('/:id', async (req, res) => {
 
