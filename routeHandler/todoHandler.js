@@ -94,5 +94,18 @@ router.delete('/:id', async (req, res) => {
         });
     }
 })
+//delete many todo 
+router.delete('/', async (req, res) => {
+    try {
+        await Todo.deleteMany({ status: 'active' })
+        res.status(200).json({
+            message: "Multiple Data delete Successfully!"
+        });
+    } catch (error) {
+        res.status(500).json({
+            error: "There was a server-side error!",
+        });
+    }
+})
 
 module.exports = router;
