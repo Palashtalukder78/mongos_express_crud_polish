@@ -8,7 +8,17 @@ const Todo = new mongoose.model('Todo', todoSchema)
 
 //get all todos
 router.get('/', async (req, res) => {
-
+    try {
+        const todos = await Todo.find({})
+        res.status(200).json({
+            message: "Get all Data Successfully!",
+            result: todos
+        });
+    } catch (error) {
+        res.status(500).json({
+            error: "There was a server-side error!",
+        });
+    }
 })
 //get a todo by id
 router.get('/:id', async (req, res) => {
@@ -49,7 +59,7 @@ router.post('/all', async (req, res) => {
 //put a todo 
 router.put('/:id', async (req, res) => {
     try {
-        const result = await Todo.findByIdAndUpdate({ _id: req.params.id }, { status: 'active' }, {new: true});
+        const result = await Todo.findByIdAndUpdate({ _id: req.params.id }, { status: 'active' }, { new: true });
         res.status(200).json({
             message: "Data update successfully!",
         });
