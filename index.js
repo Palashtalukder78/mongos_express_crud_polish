@@ -20,7 +20,7 @@ app.use('/todo', todoHandler)
 
 //default error handling
 function errorHandler(err,req,res,next){
-    if(res.headerSend){
+    if(res.headerSent){
         return next(err)
     }
     res.status(500).json({error: err})
