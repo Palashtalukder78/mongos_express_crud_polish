@@ -30,7 +30,17 @@ router.post('/', async (req, res) => {
 })
 //post multiple todo 
 router.post('/all', async (req, res) => {
-
+    try {
+        await Todo.insertMany(req.body);
+        // await Todo.save();
+        res.status(200).json({
+            message: "Many Data inserted successfully!",
+        });
+    } catch (error) {
+        res.status(500).json({
+            error: "There was a server-side error!",
+        });
+    }
 })
 //put a todo 
 router.put('/:id', async (req, res) => {
