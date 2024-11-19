@@ -14,6 +14,8 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
 
 })
+
+
 //post a todo 
 router.post('/', async (req, res) => {
     try {
@@ -42,9 +44,20 @@ router.post('/all', async (req, res) => {
         });
     }
 })
+
+
 //put a todo 
 router.put('/:id', async (req, res) => {
-
+    try {
+        await Todo.updateOne({ _id: req.params.id }, { status: 'active' });
+        res.status(200).json({
+            message: "Data update successfully!",
+        });
+    } catch (error) {
+        res.status(500).json({
+            error: "There was a server-side error!",
+        });
+    }
 })
 //delete todo 
 router.delete('/:id', async (req, res) => {
