@@ -27,7 +27,14 @@ todoSchema.methods = {
 //MAKING STATIC METHOD -- searching talukder in Title
 todoSchema.statics={
     findByTalukder: function() {
-        return this.find({title: /talukder/i}) // [/talukder/i]- Regular expression
+        return this.find({ title: /talukder/i }) 
+        // [/talukder/i]- Regular expression(Backend it uses: new RegExp(language, "i"))
+    }
+}
+// QUERY HELPERS
+todoSchema.query={
+    byAuthor: function(author) {
+        return this.find({title: new RegExp(author, "i")}) // [/talukder/i]- Regular expression
     }
 }
 

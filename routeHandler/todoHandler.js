@@ -36,10 +36,25 @@ router.get('/active', async (req, res) => {
     }
 })
 
-//get active todos- MAKING STATIC METHOD
+//get todos by title-Talukder- MAKING STATIC METHOD
 router.get('/talukder', async (req, res) => {
     try {
         const data = await Todo.findByTalukder();
+        res.status(200).json({
+            message: "Get Single Data Successfully!",
+            result: data
+        });
+    } catch (error) {
+        res.status(500).json({
+            error: "There was a server-side error!",
+        });
+    }
+})
+
+//get todos by title-author name- MAKING QUERY Helper
+router.get('/author', async (req, res) => {
+    try {
+        const data = await Todo.find().byAuthor('Arish');
         res.status(200).json({
             message: "Get Single Data Successfully!",
             result: data
