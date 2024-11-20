@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
         });
     }
 })
-//get active todos
+//get active todos- MAKING INSTANCE METHOD
 router.get('/active', async (req, res) => {
     try {
         const todo = new Todo();
@@ -34,19 +34,23 @@ router.get('/active', async (req, res) => {
             error: "There was a server-side error!",
         });
     }
-    
-    // try {
-    //     const todos = await Todo.find({ status: 'active' }).select({ _id: 0, __v: 0, date: 0 }).limit(2)
-    //     res.status(200).json({
-    //         message: "Get all Data Successfully!",
-    //         result: todos
-    //     });
-    // } catch (error) {
-    //     res.status(500).json({
-    //         error: "There was a server-side error!",
-    //     });
-    // }
 })
+
+//get active todos- MAKING STATIC METHOD
+router.get('/talukder', async (req, res) => {
+    try {
+        const data = await Todo.findByTalukder();
+        res.status(200).json({
+            message: "Get Single Data Successfully!",
+            result: data
+        });
+    } catch (error) {
+        res.status(500).json({
+            error: "There was a server-side error!",
+        });
+    }
+})
+
 
 //get a todo by id
 router.get('/:id', async (req, res) => {

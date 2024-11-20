@@ -15,10 +15,19 @@ const todoSchema = mongoose.Schema({
         default: Date.now()
     }
 })
-
+// MAKING INSTANCE METHOD
 todoSchema.methods = {
     findActive: function() {
         return mongoose.model('Todo').find({status: 'active'})
+    },
+    findActiveCallback: function(cb) {
+        return mongoose.model('Todo').find({status: 'active'}, cb)
+    },
+}
+//MAKING STATIC METHOD -- searching talukder in Title
+todoSchema.statics={
+    findByTalukder: function() {
+        return this.find({title: /talukder/i}) // [/talukder/i]- Regular expression
     }
 }
 
