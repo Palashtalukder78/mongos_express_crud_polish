@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const userSchema = require("../schemas/userSchema");
+const checkLogin = require("../middlewares/checkLogin");
 
 //Make user model
 const User = new mongoose.model("User", userSchema);

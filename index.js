@@ -24,13 +24,13 @@ app.use("/todo", todoHandler);
 app.use("/user", userHandler);
 
 //default error handling
-function errorHandler(err, req, res, next) {
+const errorHandler = (err, req, res, next) => {
   if (res.headerSent) {
     return next(err);
   }
   res.status(500).json({ error: err });
-}
-
+};
+app.use(errorHandler);
 //listining app
 app.listen(4000, () => {
   console.log("app listening port: 4000");
