@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const userSchema = require("../schemas/userSchema");
 
-//Make model
+//Make user model
 const User = new mongoose.model("User", userSchema);
 
 router.post("/signup", async (req, res) => {
