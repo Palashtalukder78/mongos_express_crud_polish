@@ -10,6 +10,24 @@ const checkLogin = require("../middlewares/checkLogin");
 //Make user model
 const User = new mongoose.model("User", userSchema);
 
+//Userlist
+router.get("/", async (req, res) => {
+  try {
+    const users = await User.find({})
+      .populate("todos", "title description status") // bring data(username, user) and except _id from User collection and put it into user field
+      .select({ _id: 0, __v: 0, date: 0 });
+    // .limit(2);
+    res.status(200).json({
+      message: "Get all Data Successfully!",
+      result: users,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: "There was a server-side error!",
+    });
+  }
+});
+
 //SignUp
 router.post("/signup", async (req, res) => {
   const hashedPassword = await bcrypt.hash(req.body.password, 10);

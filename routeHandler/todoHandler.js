@@ -2,10 +2,12 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const todoSchema = require("../schemas/todoSchema");
+const userSchema = require("../schemas/userSchema");
 const checkLogin = require("../middlewares/checkLogin");
 
 //Make model
 const Todo = new mongoose.model("Todo", todoSchema);
+const User = new mongoose.model("User", userSchema);
 
 //get all todos
 router.get("/", checkLogin, async (req, res) => {
@@ -91,12 +93,22 @@ router.get("/:id", async (req, res) => {
 
 //post a todo
 router.post("/", checkLogin, async (req, res) => {
+  const newTodo = new Todo({
+    ...req.body,
+    user: req.userId,
+  });
   try {
-    const newTodo = new Todo({
-      ...req.body,
-      user: req.userId,
-    });
-    await newTodo.save();
+    const todo = await newTodo.save();
+    await User.updateOne(
+      {
+        _id: req.userId,
+      },
+      {
+        $push: {
+          todos: todo._id,
+        },
+      }
+    );
     res.status(200).json({
       message: "Data inserted successfully!",
     });
