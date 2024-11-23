@@ -9,12 +9,11 @@ const Todo = new mongoose.model("Todo", todoSchema);
 
 //get all todos
 router.get("/", checkLogin, async (req, res) => {
-  console.log(req.username);
-  console.log(req.userId);
   try {
-    const todos = await Todo.find({ status: "active" })
-      .select({ _id: 0, __v: 0, date: 0 })
-      .limit(2);
+    const todos = await Todo.find({})
+      .populate("user", "username name -_id") // bring data(username, user) and except _id from User collection and put it into user field
+      .select({ _id: 0, __v: 0, date: 0 });
+    // .limit(2);
     res.status(200).json({
       message: "Get all Data Successfully!",
       result: todos,
